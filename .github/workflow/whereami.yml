@@ -1,0 +1,23 @@
+name: whereami
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: '0 * * * *'
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v3
+    - name: Where am I?
+      run: curl --silent https://location.phiffer.org/?txt=1 >> whereami.log
+    - name: Commit results
+      run: |-
+        git config user.name "Automated"
+        git config user.email "actions@users.noreply.github.com"
+        git add -A
+        timestamp=$(date -u)
+        git commit -m "whereami: ${timestamp}" || exit 0
+        git push
