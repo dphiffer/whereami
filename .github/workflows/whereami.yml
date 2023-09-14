@@ -11,6 +11,8 @@ jobs:
     steps:
     - name: Check out repo
       uses: actions/checkout@v3
+    - name: Pull updates
+      run: git pull
     - name: Where am I?
       run: curl --silent https://location.phiffer.org/?txt=1 >> whereami.log
     - name: Commit results
